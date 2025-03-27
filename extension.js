@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const fetch = require('node-fetch');
 
-const API_URL = 'https://api.hydrovolter.workers.dev/vscode/'; // Replace with your Cloudflare Worker URL
+const API_URL = 'https://api.hydrovolter.workers.dev/vscode/'; // API URL
 let startTime = Date.now();
 
 function updateWorkspaceInfo() {
