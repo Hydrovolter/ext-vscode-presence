@@ -1,6 +1,6 @@
 # VS Code Presence Extension
 
-This Visual Studio Code extension fetches workspace information and sends it to a public API. It is designed to integrate with external services by providing real-time updates about your current workspace (for example, [my portfolio](https://hydrovolter.com))
+A Visual Studio Code extension that fetches workspace information and sends it to a public API. Designed to integrate with external services by providing real-time updates about your current workspace (for example, [my portfolio](https://hydrovolter.com))
 
 ## Features
 
@@ -11,21 +11,41 @@ This Visual Studio Code extension fetches workspace information and sends it to 
 - Sends the collected data to a configurable public API endpoint.
 - Lightweight and easy to configure.
 
+## Development
+
+1. Clone this repository:
+     ```bash
+     git clone https://github.com/hydrovolter/ext-vscode-presence.git
+     ```
+2. Install dependencies:
+     ```bash
+     npm install
+     ```
+3. Open the folder in Visual Studio Code.
+4. Run the extension in the Extension Development Host:
+     - Press `F5` or go to `Run > Start Debugging`.
+
 ## Installation
 
 1. Clone this repository:
      ```bash
-     git clone https://github.com/your-username/ext-vscode-presence.git
+     git clone https://github.com/hydrovolter/ext-vscode-presence.git
      ```
-2. Open the folder in Visual Studio Code.
-3. Run the extension in the Extension Development Host:
-     - Press `F5` or go to `Run > Start Debugging`.
+2. Install dependencies:
+     ```bash
+     npm install
+     ```
+3. Open the folder in Visual Studio Code.
+4. Compile the extension:
+    ```bash
+        vsce package
+    ```
 
 ## Usage
 
 1. Configure the API endpoint in the extension settings:
      - Go to `File > Preferences > Settings` (or `Code > Preferences > Settings` on macOS).
-     - Search for `Presence API Endpoint` and set the URL of your public API.
+     - Search for `API URL` and set the URL of your public API.
 
 2. Open a workspace in VS Code. The extension will automatically fetch workspace information and send it to the configured API.
 
@@ -33,7 +53,8 @@ This Visual Studio Code extension fetches workspace information and sends it to 
 
 The extension provides the following settings:
 
-- **Presence API Endpoint**: The URL of the public API where workspace information will be sent.
+- **API URL**: The API URL to send workspace data.
+- **Sync Interval**: Interval in milliseconds between API syncs (minimum 1000ms)
 
 ## Development
 
@@ -48,3 +69,5 @@ To contribute or modify the extension:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+Made by Hydrovolter
