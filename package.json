@@ -8,6 +8,7 @@
   "description": "Tracks VSCode Presence and sends it to a public API",
   "version": "1.0.0",
   "publisher": "Hydrovolter",
+  "icon": "icon.png",
   "engines": { "vscode": "^1.60.0" },
   "categories": ["Other"],
   "activationEvents": ["*"],
