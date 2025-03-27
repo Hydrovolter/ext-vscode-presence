@@ -38,7 +38,7 @@ A Visual Studio Code extension that fetches workspace information and sends it t
 3. Open the folder in Visual Studio Code.
 4. Compile the extension:
     ```bash
-        vsce package
+    vsce package
     ```
 
 ## Usage
