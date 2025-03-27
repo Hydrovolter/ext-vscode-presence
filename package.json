@@ -13,12 +13,29 @@
   "categories": ["Other"],
   "activationEvents": ["*"],
   "main": "extension.js",
-  "contributes": {},
+  "contributes": {
+    "configuration": {
+        "title": "VSCode Presence",
+        "properties": {
+            "vscode-presence.apiUrl": {
+                "type": "string",
+                "default": "https://api.hydrovolter.workers.dev/vscode/",
+                "description": "The API URL to send workspace data."
+            },
+            "vscode-presence.syncInterval": {
+                "type": "integer",
+                "default": 5000,
+                "minimum": 1000,
+                "description": "Interval in milliseconds between API syncs (minimum 1000ms)."
+            }
+        }
+    }
+  },
   "scripts": { "package": "vsce package" },
   "dependencies": { 
       "node-fetch": "^2.6.1"
   },
   "devDependencies": { 
       "@vscode/vsce": "^2.12.0" 
-  }
+  } 
 }

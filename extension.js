@@ -1,11 +1,21 @@
 const vscode = require('vscode');
 const fetch = require('node-fetch');
 
-const API_URL = 'https://api.hydrovolter.workers.dev/vscode/';
 let startTime;
 let isSyncing = true;
 let statusBarItem;
 let interval;
+
+/**
+ * Retrieves the user settings from VS Code
+ */
+function getSettings() {
+    const config = vscode.workspace.getConfiguration('vscode-presence');
+    return {
+        apiUrl: config.get('apiUrl', 'https://api.hydrovolter.workers.dev/vscode/'),
+        syncInterval: config.get('syncInterval', 5000) // Default: 5s
+    };
+}
 
 /**
  * Retrieves workspace and editor information
@@ -34,11 +44,12 @@ function updateWorkspaceInfo() {
 async function sendData() {
     if (!isSyncing) return;
 
+    const { apiUrl } = getSettings();
     const data = updateWorkspaceInfo();
     if (!data) return;
 
     try {
-        await fetch(API_URL, {
+        await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -67,15 +78,25 @@ function updateStatusBar() {
 }
 
 /**
- * Resets the start time and ensures the interval is running
+ * Restarts syncing with updated settings
  */
 function restartSyncing() {
     startTime = Date.now();
+    const { syncInterval } = getSettings();
     
     if (interval) clearInterval(interval); // Clear any existing interval
-    interval = setInterval(sendData, 5000);
+    interval = setInterval(sendData, syncInterval);
     
     sendData(); // Send an immediate request when reactivated
+}
+
+/**
+ * Handles settings changes dynamically
+ */
+function handleConfigurationChange(event) {
+    if (event.affectsConfiguration('vscode-presence.apiUrl') || event.affectsConfiguration('vscode-presence.syncInterval')) {
+        restartSyncing();
+    }
 }
 
 function activate(context) {
@@ -92,6 +113,9 @@ function activate(context) {
 
     // Restart syncing on activation
     restartSyncing();
+
+    // Listen for settings changes
+    vscode.workspace.onDidChangeConfiguration(handleConfigurationChange);
 
     // Restart syncing on workspace folder change (e.g., refresh, reopen)
     vscode.workspace.onDidChangeWorkspaceFolders(restartSyncing);
