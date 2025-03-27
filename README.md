@@ -41,6 +41,8 @@ A Visual Studio Code extension that fetches workspace information and sends it t
     vsce package
     ```
 
+You will need to have your own API. I personally use Cloudflare Workers. A simple example API for Cloudflare Workers is provided in the example.workers.js file. (I use a variation of this one!)
+
 ## Usage
 
 1. Configure the API endpoint in the extension settings:
