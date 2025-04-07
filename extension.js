@@ -95,7 +95,7 @@ function restartSyncing() {
  * Handles settings changes dynamically
  */
 function handleConfigurationChange(event) {
-    if (event.affectsConfiguration('vscode-presence.apiUrl') || event.affectsConfiguration('vscode-presence.syncInterval')) {
+    if (event.affectsConfiguration('vscode-presence.apiUrl') || event.affectsConfiguration('vscode-presence.syncInterval') || event.affectsConfiguration('vscode-presence.apiKey')) {
         restartSyncing();
     }
 }
