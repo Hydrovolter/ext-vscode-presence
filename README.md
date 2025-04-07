@@ -9,6 +9,7 @@ A Visual Studio Code extension that fetches workspace information and sends it t
     - Workspace folder name
     - Active programming language
 - Sends the collected data to a configurable public API endpoint.
+- Secured with an x-api-key HTTP POST Header
 - Lightweight and easy to configure.
 
 ## Development
@@ -57,6 +58,7 @@ The extension provides the following settings:
 
 - **API URL**: The API URL to send workspace data.
 - **Sync Interval**: Interval in milliseconds between API syncs (minimum 1000ms)
+- **API Key**: The API Key for authentication with the API.
 
 ## Development
 
