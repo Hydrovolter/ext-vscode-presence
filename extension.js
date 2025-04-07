@@ -12,8 +12,9 @@ let interval;
 function getSettings() {
     const config = vscode.workspace.getConfiguration('vscode-presence');
     return {
-        apiUrl: config.get('apiUrl', 'https://api.hydrovolter.workers.dev/vscode/'),
-        syncInterval: config.get('syncInterval', 5000) // Default: 5s
+        apiUrl: config.get('apiUrl', 'https://status-boh2.onrender.com/api/vscode'),
+        syncInterval: config.get('syncInterval', 5000), // Default: 5s
+        apiKey: config.get('apiKey', 'SECRET_API_KEY')
     };
 }
 
@@ -44,14 +45,14 @@ function updateWorkspaceInfo() {
 async function sendData() {
     if (!isSyncing) return;
 
-    const { apiUrl } = getSettings();
+    const { apiUrl, apiKey } = getSettings();
     const data = updateWorkspaceInfo();
     if (!data) return;
 
     try {
         await fetch(apiUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', "x-api-key": apiKey},
             body: JSON.stringify(data)
         });
     } catch (error) {
@@ -72,7 +73,7 @@ function toggleSyncing() {
  */
 function updateStatusBar() {
     if (statusBarItem) {
-        statusBarItem.text = isSyncing ? '$(sync) Syncing' : '$(circle-slash) Not Syncing';
+        statusBarItem.text = isSyncing ? '$(sync) Status Syncing' : '$(circle-slash) Not Syncing';
         statusBarItem.tooltip = isSyncing ? 'Click to stop syncing' : 'Click to start syncing';
     }
 }
@@ -100,7 +101,9 @@ function handleConfigurationChange(event) {
 }
 
 function activate(context) {
-    console.log('VS Code Presence API activated');
+    const { apiUrl, syncInterval } = getSettings();
+    console.log('VS Code Presence API activated - Made by Hydrovolter');
+    console.log(`API URL: ${apiUrl} | Sync Interval: ${syncInterval}ms`);
 
     // Create status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
